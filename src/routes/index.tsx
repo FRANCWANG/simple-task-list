@@ -1,8 +1,28 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type KeyboardEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 
-import { addTask, countPending, pendingLabel, removeTask, toggleTask, type Task } from "@/lib/todo";
+import {
+  addTask,
+  clearCompleted,
+  countPending,
+  editTask,
+  filterTasks,
+  parseStoredTasks,
+  pendingLabel,
+  removeTask,
+  toggleTask,
+  type Task,
+  type TaskFilter,
+} from "@/lib/todo";
+
+const STORAGE_KEY = "hoje.tasks";
+
+const FILTERS: { value: TaskFilter; label: string; empty: string }[] = [
+  { value: "all", label: "Todas", empty: "Nada por aqui ainda. Adicione sua primeira tarefa acima." },
+  { value: "pending", label: "Pendentes", empty: "Nenhuma tarefa pendente." },
+  { value: "done", label: "Concluídas", empty: "Nenhuma tarefa concluída." },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,14 +46,57 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [draft, setDraft] = useState("");
+  const [filter, setFilter] = useState<TaskFilter>("all");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState("");
+
   const pending = countPending(tasks);
+  const completed = tasks.length - pending;
+  const visible = filterTasks(tasks, filter);
+  const emptyMessage = FILTERS.find((f) => f.value === filter)?.empty ?? "";
+
+  useEffect(() => {
+    try {
+      setTasks(parseStoredTasks(window.localStorage.getItem(STORAGE_KEY)));
+    } catch {
+      // Storage unavailable (e.g. private mode): start with an empty list.
+    }
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!loaded) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    } catch {
+      // Ignore quota or availability errors.
+    }
+  }, [tasks, loaded]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (!draft.trim()) return;
     setTasks((prev) => addTask(prev, draft, crypto.randomUUID()));
     setDraft("");
+  }
+
+  function startEditing(task: Task) {
+    setEditingId(task.id);
+    setEditDraft(task.title);
+  }
+
+  function commitEdit() {
+    if (editingId === null) return;
+    const id = editingId;
+    setTasks((prev) => editTask(prev, id, editDraft));
+    setEditingId(null);
+  }
+
+  function handleEditKey(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") commitEdit();
+    if (event.key === "Escape") setEditingId(null);
   }
 
   return (
@@ -64,13 +127,41 @@ function Index() {
           </button>
         </form>
 
-        {tasks.length === 0 ? (
-          <p className="py-12 text-center text-sm text-muted-foreground">
-            Nada por aqui ainda. Adicione sua primeira tarefa acima.
-          </p>
+        {tasks.length > 0 && (
+          <div className="mb-2 flex items-center justify-between gap-3">
+            <div role="group" aria-label="Filtrar tarefas" className="flex gap-1">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  aria-pressed={filter === f.value}
+                  onClick={() => setFilter(f.value)}
+                  className={`rounded-full px-3 py-1 text-sm transition ${
+                    filter === f.value
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => setTasks((prev) => clearCompleted(prev))}
+              disabled={completed === 0}
+              className="text-sm text-muted-foreground transition hover:text-destructive disabled:pointer-events-none disabled:opacity-30"
+            >
+              Limpar concluídas
+            </button>
+          </div>
+        )}
+
+        {visible.length === 0 ? (
+          <p className="py-12 text-center text-sm text-muted-foreground">{emptyMessage}</p>
         ) : (
           <ul className="divide-y divide-border">
-            {tasks.map((task) => (
+            {visible.map((task) => (
               <li key={task.id} className="todo-row group flex items-center gap-3 py-3.5">
                 <button
                   type="button"
@@ -86,13 +177,27 @@ function Index() {
                 >
                   {task.done && <Check className="size-3" strokeWidth={3} />}
                 </button>
-                <span
-                  className={`flex-1 break-words transition ${
-                    task.done ? "text-muted-foreground line-through" : "text-foreground"
-                  }`}
-                >
-                  {task.title}
-                </span>
+                {editingId === task.id ? (
+                  <input
+                    autoFocus
+                    value={editDraft}
+                    onChange={(e) => setEditDraft(e.target.value)}
+                    onBlur={commitEdit}
+                    onKeyDown={handleEditKey}
+                    aria-label={`Editar "${task.title}"`}
+                    className="min-w-0 flex-1 border-b border-primary bg-transparent text-foreground outline-none"
+                  />
+                ) : (
+                  <span
+                    onDoubleClick={() => startEditing(task)}
+                    title="Clique duas vezes para editar"
+                    className={`flex-1 cursor-text break-words transition ${
+                      task.done ? "text-muted-foreground line-through" : "text-foreground"
+                    }`}
+                  >
+                    {task.title}
+                  </span>
+                )}
                 <button
                   type="button"
                   aria-label={`Excluir "${task.title}"`}
