@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { addTask, countPending, removeTask, toggleTask, type Task } from "./todo";
+import { addTask, countPending, pendingLabel, removeTask, toggleTask, type Task } from "./todo";
 
 const sample: Task[] = [
   { id: "a", title: "Buy milk", done: false },
@@ -46,5 +46,16 @@ describe("countPending", () => {
     expect(countPending(sample)).toBe(1);
     expect(countPending([])).toBe(0);
     expect(countPending(toggleTask(sample, "b"))).toBe(2);
+  });
+});
+
+describe("pendingLabel", () => {
+  it("uses singular for exactly one pending task", () => {
+    expect(`1 ${pendingLabel(1)}`).toBe("1 tarefa pendente");
+  });
+
+  it("uses plural for zero or many pending tasks", () => {
+    expect(`3 ${pendingLabel(3)}`).toBe("3 tarefas pendentes");
+    expect(`0 ${pendingLabel(0)}`).toBe("0 tarefas pendentes");
   });
 });

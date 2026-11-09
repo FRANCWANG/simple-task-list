@@ -2,20 +2,20 @@ import { useState, type FormEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 
-import { addTask, countPending, removeTask, toggleTask, type Task } from "@/lib/todo";
+import { addTask, countPending, pendingLabel, removeTask, toggleTask, type Task } from "@/lib/todo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Today — A simple to-do list" },
+      { title: "Hoje — Uma lista de tarefas simples" },
       {
         name: "description",
-        content: "A clean, minimal to-do list: add tasks, check them off, and see what's left.",
+        content: "Uma lista de tarefas limpa e minimalista: adicione tarefas, marque como concluídas e veja o que falta.",
       },
-      { property: "og:title", content: "Today — A simple to-do list" },
+      { property: "og:title", content: "Hoje — Uma lista de tarefas simples" },
       {
         property: "og:description",
-        content: "A clean, minimal to-do list: add tasks, check them off, and see what's left.",
+        content: "Uma lista de tarefas limpa e minimalista: adicione tarefas, marque como concluídas e veja o que falta.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -40,10 +40,9 @@ function Index() {
     <main className="min-h-screen bg-background px-5 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-md">
         <header className="mb-10 flex items-end justify-between gap-4">
-          <h1 className="font-display text-6xl leading-none text-foreground">Today</h1>
+          <h1 className="font-display text-6xl leading-none text-foreground">Hoje</h1>
           <p className="pb-1 text-sm text-muted-foreground" aria-live="polite">
-            <span className="font-semibold text-primary">{pending}</span>{" "}
-            {pending === 1 ? "task" : "tasks"} pending
+            <span className="font-semibold text-primary">{pending}</span> {pendingLabel(pending)}
           </p>
         </header>
 
@@ -51,14 +50,14 @@ function Index() {
           <input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder="Add a task…"
-            aria-label="New task"
+            placeholder="Adicionar uma tarefa…"
+            aria-label="Nova tarefa"
             className="min-w-0 flex-1 bg-transparent px-4 py-3 text-base text-foreground outline-none placeholder:text-muted-foreground"
           />
           <button
             type="submit"
             disabled={!draft.trim()}
-            aria-label="Add task"
+            aria-label="Adicionar tarefa"
             className="m-1.5 grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground transition hover:opacity-90 disabled:opacity-30"
           >
             <Plus className="size-4" />
@@ -67,7 +66,7 @@ function Index() {
 
         {tasks.length === 0 ? (
           <p className="py-12 text-center text-sm text-muted-foreground">
-            Nothing here yet. Add your first task above.
+            Nada por aqui ainda. Adicione sua primeira tarefa acima.
           </p>
         ) : (
           <ul className="divide-y divide-border">
@@ -77,7 +76,7 @@ function Index() {
                   type="button"
                   role="checkbox"
                   aria-checked={task.done}
-                  aria-label={`Mark "${task.title}" as ${task.done ? "not done" : "done"}`}
+                  aria-label={`Marcar "${task.title}" como ${task.done ? "não concluída" : "concluída"}`}
                   onClick={() => setTasks((prev) => toggleTask(prev, task.id))}
                   className={`grid size-5 shrink-0 place-items-center rounded-full border transition ${
                     task.done
@@ -96,7 +95,7 @@ function Index() {
                 </span>
                 <button
                   type="button"
-                  aria-label={`Delete "${task.title}"`}
+                  aria-label={`Excluir "${task.title}"`}
                   onClick={() => setTasks((prev) => removeTask(prev, task.id))}
                   className="grid size-7 place-items-center rounded-full text-muted-foreground opacity-0 transition hover:bg-muted hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100"
                 >

@@ -25,3 +25,8 @@ export function removeTask(tasks: readonly Task[], id: string): Task[] {
 export function countPending(tasks: readonly Task[]): number {
   return tasks.reduce((count, task) => (task.done ? count : count + 1), 0);
 }
+
+/** pt-BR label that follows the pending count: "1 tarefa pendente", "3 tarefas pendentes". */
+export function pendingLabel(count: number): string {
+  return count === 1 ? "tarefa pendente" : "tarefas pendentes";
+}
