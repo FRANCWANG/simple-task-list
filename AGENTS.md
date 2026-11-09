@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- To-do logic lives in `src/lib/todo.ts` as pure, non-mutating functions (with tests in `src/lib/todo.test.ts`); UI components only call them via state setters — keeps logic testable and the UI thin.
