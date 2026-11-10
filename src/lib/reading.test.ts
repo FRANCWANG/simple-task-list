@@ -126,22 +126,22 @@ describe("recordProgress", () => {
 });
 
 describe("isReadingComplete", () => {
-  it("PDF: needs the last page AND at least 10 seconds open", () => {
+  it("PDF: needs the last page AND at least 3 seconds open", () => {
     expect(
-      isReadingComplete(pdf({ furthestPage: 10, totalPages: 10, percent: 100, openMs: 10_000 })),
+      isReadingComplete(pdf({ furthestPage: 10, totalPages: 10, percent: 100, openMs: 3_000 })),
     ).toBe(true);
     expect(
-      isReadingComplete(pdf({ furthestPage: 10, totalPages: 10, percent: 100, openMs: 9_999 })),
+      isReadingComplete(pdf({ furthestPage: 10, totalPages: 10, percent: 100, openMs: 2_999 })),
     ).toBe(false);
     expect(
       isReadingComplete(pdf({ furthestPage: 29, totalPages: 30, percent: 97, openMs: 60_000 })),
     ).toBe(false);
   });
 
-  it("text: needs at least 95% scrolled AND at least 10 seconds open", () => {
-    expect(isReadingComplete(text({ percent: 95, openMs: 10_000 }))).toBe(true);
+  it("text: needs at least 95% scrolled AND at least 3 seconds open", () => {
+    expect(isReadingComplete(text({ percent: 95, openMs: 3_000 }))).toBe(true);
     expect(isReadingComplete(text({ percent: 94, openMs: 60_000 }))).toBe(false);
-    expect(isReadingComplete(text({ percent: 100, openMs: 5_000 }))).toBe(false);
+    expect(isReadingComplete(text({ percent: 100, openMs: 2_999 }))).toBe(false);
     expect(hasReachedEnd(text({ percent: 95 }))).toBe(true);
   });
 });

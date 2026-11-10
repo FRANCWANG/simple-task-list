@@ -29,7 +29,7 @@ export type ReadingPosition =
 
 export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 /** Minimum total time with the reader open before a reading counts as complete. */
-export const MIN_READING_MS = 10_000;
+export const MIN_READING_MS = 3_000;
 /** Scroll percentage that counts as "reached the end" for text files. */
 export const TEXT_END_PERCENT = 95;
 
@@ -89,7 +89,7 @@ export function hasReachedEnd(record: ReadingRecord): boolean {
   return record.percent >= TEXT_END_PERCENT;
 }
 
-/** Complete when the end was reached AND the reader was open at least 10 seconds in total. */
+/** Complete when the end was reached AND the reader was open at least 3 seconds in total. */
 export function isReadingComplete(record: ReadingRecord): boolean {
   return hasReachedEnd(record) && record.openMs >= MIN_READING_MS;
 }
