@@ -32,3 +32,5 @@ use the editor.
 ## Project rules
 
 - To-do logic lives in `src/lib/todo.ts` as pure, non-mutating functions (with tests in `src/lib/todo.test.ts`); UI components only call them via state setters — keeps logic testable and the UI thin.
+- Display-only derived values (progress label/percent) live in `src/lib/progress.ts` with tests in `src/lib/progress.test.ts` — keeps `todo.ts` stable while staying testable.
+- Theme (light/dark) is a `.dark` class on `<html>`, set before paint by an inline script from `src/components/ThemeToggle.tsx` and saved in localStorage — avoids a flash of the wrong theme.

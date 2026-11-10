@@ -23,7 +23,10 @@ const STORAGE_KEY = "hoje.tasks";
 /** Matches the .todo-row-leaving transition in styles.css. */
 const EXIT_MS = 380;
 
-const FILTERS: { value: TaskFilter; label: string; empty: string; icon: LucideIcon }[] = [
+type FilterOption = { value: TaskFilter; label: string; empty: string; icon: LucideIcon };
+
+/** Non-empty tuple type, so FILTERS[0] is always defined as the fallback. */
+const FILTERS: readonly [FilterOption, ...FilterOption[]] = [
   {
     value: "all",
     label: "Todas",
