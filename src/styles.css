@@ -64,6 +64,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --shadow-soft: var(--elevation-soft);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -75,75 +76,81 @@
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.975 0.008 85);
-  --foreground: oklch(0.24 0.02 60);
-  --card: oklch(0.99 0.004 85);
-  --card-foreground: oklch(0.24 0.02 60);
-  --popover: oklch(0.99 0.004 85);
-  --popover-foreground: oklch(0.24 0.02 60);
-  --primary: oklch(0.42 0.07 160);
-  --primary-foreground: oklch(0.98 0.008 85);
-  --secondary: oklch(0.94 0.012 85);
-  --secondary-foreground: oklch(0.24 0.02 60);
-  --muted: oklch(0.935 0.012 85);
-  --muted-foreground: oklch(0.55 0.02 70);
-  --accent: oklch(0.93 0.03 160);
-  --accent-foreground: oklch(0.3 0.06 160);
-  --destructive: oklch(0.56 0.18 30);
-  --destructive-foreground: oklch(0.98 0.008 85);
-  --border: oklch(0.9 0.012 80);
-  --input: oklch(0.9 0.012 80);
-  --ring: oklch(0.42 0.07 160 / 40%);
-  --shadow-soft: 0 1px 2px oklch(0.24 0.02 60 / 4%), 0 8px 24px -12px oklch(0.24 0.02 60 / 12%);
+  color-scheme: light;
+  --radius: 1rem;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --background: oklch(0.972 0.01 85);
+  --foreground: oklch(0.36 0.02 70);
+  --card: oklch(0.988 0.006 85);
+  --card-foreground: oklch(0.36 0.02 70);
+  --popover: oklch(0.988 0.006 85);
+  --popover-foreground: oklch(0.36 0.02 70);
+  --primary: oklch(0.58 0.055 150);
+  --primary-foreground: oklch(0.985 0.006 85);
+  --secondary: oklch(0.945 0.012 85);
+  --secondary-foreground: oklch(0.36 0.02 70);
+  --muted: oklch(0.945 0.011 85);
+  --muted-foreground: oklch(0.56 0.018 75);
+  --accent: oklch(0.935 0.026 150);
+  --accent-foreground: oklch(0.42 0.05 150);
+  --destructive: oklch(0.6 0.1 35);
+  --destructive-foreground: oklch(0.985 0.006 85);
+  --border: oklch(0.915 0.012 80);
+  --input: oklch(0.915 0.012 80);
+  --ring: oklch(0.58 0.055 150 / 28%);
+  --glow: oklch(0.58 0.055 150 / 9%);
+  --elevation-soft: 0 1px 2px oklch(0.36 0.03 70 / 3%), 0 14px 36px -18px oklch(0.36 0.03 70 / 14%);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar: oklch(0.972 0.01 85);
+  --sidebar-foreground: oklch(0.36 0.02 70);
+  --sidebar-primary: oklch(0.58 0.055 150);
+  --sidebar-primary-foreground: oklch(0.985 0.006 85);
+  --sidebar-accent: oklch(0.935 0.026 150);
+  --sidebar-accent-foreground: oklch(0.42 0.05 150);
+  --sidebar-border: oklch(0.915 0.012 80);
+  --sidebar-ring: oklch(0.58 0.055 150 / 28%);
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
+  color-scheme: dark;
+  --background: oklch(0.225 0.01 70);
+  --foreground: oklch(0.87 0.012 80);
+  --card: oklch(0.255 0.011 70);
+  --card-foreground: oklch(0.87 0.012 80);
+  --popover: oklch(0.255 0.011 70);
+  --popover-foreground: oklch(0.87 0.012 80);
+  --primary: oklch(0.72 0.055 150);
+  --primary-foreground: oklch(0.23 0.015 150);
+  --secondary: oklch(0.29 0.011 70);
+  --secondary-foreground: oklch(0.87 0.012 80);
+  --muted: oklch(0.29 0.011 70);
+  --muted-foreground: oklch(0.66 0.014 75);
+  --accent: oklch(0.32 0.028 150);
+  --accent-foreground: oklch(0.84 0.04 150);
+  --destructive: oklch(0.7 0.09 35);
+  --destructive-foreground: oklch(0.23 0.015 35);
+  --border: oklch(0.32 0.011 70);
+  --input: oklch(0.32 0.011 70);
+  --ring: oklch(0.72 0.055 150 / 30%);
+  --glow: oklch(0.72 0.055 150 / 6%);
+  --elevation-soft: 0 1px 2px oklch(0.1 0.01 70 / 20%), 0 14px 36px -18px oklch(0.1 0.01 70 / 45%);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --sidebar: oklch(0.255 0.011 70);
+  --sidebar-foreground: oklch(0.87 0.012 80);
+  --sidebar-primary: oklch(0.72 0.055 150);
+  --sidebar-primary-foreground: oklch(0.23 0.015 150);
+  --sidebar-accent: oklch(0.32 0.028 150);
+  --sidebar-accent-foreground: oklch(0.84 0.04 150);
+  --sidebar-border: oklch(0.32 0.011 70);
+  --sidebar-ring: oklch(0.72 0.055 150 / 30%);
 }
 
 @layer base {
@@ -152,31 +159,117 @@
   }
 
   body {
+    min-height: 100vh;
     background-color: var(--color-background);
+    background-image: radial-gradient(60rem 28rem at 50% -8rem, var(--glow), transparent 70%);
+    background-repeat: no-repeat;
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 500ms ease, color 500ms ease;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
   }
 }
 
 @layer components {
+  .soft-focus {
+    outline: none;
+  }
+  .soft-focus:focus-visible {
+    box-shadow: 0 0 0 4px var(--color-ring);
+  }
+
   .todo-input-shell {
     display: flex;
     align-items: center;
     border: 1px solid var(--color-border);
     border-radius: 9999px;
     background-color: var(--color-card);
-    box-shadow: var(--shadow-soft);
-    transition: border-color 150ms, box-shadow 150ms;
+    box-shadow: var(--elevation-soft);
+    transition: border-color 300ms ease, box-shadow 300ms ease;
   }
   .todo-input-shell:focus-within {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-soft), 0 0 0 4px var(--color-ring);
+    border-color: color-mix(in oklab, var(--color-primary) 55%, var(--color-border));
+    box-shadow: var(--elevation-soft), 0 0 0 5px var(--color-ring);
   }
+
+  /* Rows collapse smoothly on removal via the grid-rows 1fr -> 0fr trick. */
   .todo-row {
-    animation: todo-in 220ms ease-out;
+    display: grid;
+    grid-template-rows: 1fr;
+    animation: todo-in 480ms var(--ease-soft) both;
+    transition: grid-template-rows 380ms var(--ease-soft), opacity 300ms ease;
+  }
+  .todo-row > * {
+    min-height: 0;
+    transition: transform 380ms var(--ease-soft);
+  }
+  .todo-row-leaving {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .todo-row-leaving > * {
+    overflow: hidden;
+    transform: translateX(10px);
+  }
+
+  .todo-check-icon {
+    animation: check-pop 380ms var(--ease-soft) both;
+  }
+
+  /* Strike-through that draws across the title instead of snapping on. */
+  .todo-title {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 58%;
+    background-size: 0% 1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 500ms var(--ease-soft);
+  }
+  .todo-title[data-done="true"] {
+    background-size: 100% 1px;
+  }
+
+  .fade-in {
+    animation: fade-in 500ms var(--ease-soft) both;
+  }
+  .float-soft {
+    animation: float-soft 6s ease-in-out infinite;
   }
 }
 
 @keyframes todo-in {
-  from { opacity: 0; transform: translateY(-4px); }
+  from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes check-pop {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }
